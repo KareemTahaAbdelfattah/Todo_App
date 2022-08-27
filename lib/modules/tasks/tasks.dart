@@ -22,7 +22,7 @@ class _TodoTasksState extends State<TodoTasks> {
             child: Container(
               width: double.infinity,
               height: 1.0,
-              color: Colors.grey[400],
+              color: Colors.grey[300],
             ),
           ),
           itemCount: tasks.length),

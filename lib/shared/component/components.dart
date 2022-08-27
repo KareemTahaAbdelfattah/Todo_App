@@ -59,7 +59,7 @@ Widget DefaultTaskScreen(Map models) => Row(
             height: 3.0,
           ),
           Text(
-            '${models['data']}',
+            '${models['date']}',
             style: TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.bold,
