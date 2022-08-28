@@ -82,7 +82,13 @@ class _TodoScreenState extends State<TodoScreen> {
           if(isBottomSheet)
           {
             if(FormKey.currentState!.validate()) {
-              InsertDatabase(title: titleController.text, time: timeController.text, date: dateController.text);
+              if(titleController.text != "" && timeController.text != "" && dateController.text != "")
+              {
+                InsertDatabase(
+                    title: titleController.text,
+                    time: timeController.text,
+                    date: dateController.text);
+              }
               Navigator.pop(context);
               isBottomSheet = false;
               setState(() {
@@ -188,7 +194,20 @@ class _TodoScreenState extends State<TodoScreen> {
                       ),
                     ),
                   ),
-                ),);
+                ),).closed.then((value) {
+                  /*if(titleController.text != "" && timeController.text != "" && dateController.text != "")
+                  {
+                    InsertDatabase(
+                        title: titleController.text,
+                        time: timeController.text,
+                        date: dateController.text);
+                  }*/
+              //Navigator.pop(context);
+              isBottomSheet = false;
+              setState(() {
+                fabIcon = Icons.add;
+              });
+            });
             isBottomSheet = true;
             setState(() {
               fabIcon = Icons.remove;

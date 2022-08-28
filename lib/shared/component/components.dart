@@ -32,7 +32,7 @@ Widget DefaultTaskScreen(Map models) => Row(
         child: Text(
           '${models['time']}',
           style: TextStyle(
-            fontSize: 13.0,
+            fontSize: 12.0,
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
@@ -48,7 +48,7 @@ Widget DefaultTaskScreen(Map models) => Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            '${models['title']}',
+            '${(models['title']).toString().toUpperCase()}',
             style: TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.bold,
