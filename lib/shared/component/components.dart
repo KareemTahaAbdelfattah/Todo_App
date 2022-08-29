@@ -24,75 +24,152 @@ Widget defaultButton({
   ),
 );
 
-Widget DefaultTaskScreen(Map models, context) => Row(
-  children: [
-    CircleAvatar(
-      radius: 30.0,
-      backgroundColor: Colors.blueAccent[500],
-      child: Center(
-        child: Text(
-          '${models['time']}',
-          style: TextStyle(
-            fontSize: 12.0,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+Widget DefaultTaskScreen(Map models, context) => Dismissible(
+  key: Key(models['id'].toString()),
+  child: Row(
+
+    children: [
+
+      CircleAvatar(
+
+        radius: 30.0,
+
+        backgroundColor: Colors.blueAccent[500],
+
+        child: Center(
+
+          child: Text(
+
+            '${models['time']}',
+
+            style: TextStyle(
+
+              fontSize: 12.0,
+
+              color: Colors.white,
+
+              fontWeight: FontWeight.bold,
+
+            ),
+
           ),
+
         ),
+
       ),
-    ),
-    SizedBox(
-      width: 15.0,
-    ),
-    Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            '${(models['title']).toString().toUpperCase()}',
-            style: TextStyle(
-              fontSize: 15.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
-          ),
-          SizedBox(
-            height: 3.0,
-          ),
-          Text(
-            '${models['date']}',
-            style: TextStyle(
-              fontSize: 15.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.black45,
-            ),
-          ),
-        ],
+
+      SizedBox(
+
+        width: 15.0,
+
       ),
-    ),
-    SizedBox(
-      width: 15.0,
-    ),
-    IconButton(
+
+      Expanded(
+
+        child: Column(
+
+          crossAxisAlignment: CrossAxisAlignment.start,
+
+          mainAxisSize: MainAxisSize.min,
+
+          children: [
+
+            Text(
+
+              '${(models['title']).toString().toUpperCase()}',
+
+              style: TextStyle(
+
+                fontSize: 15.0,
+
+                fontWeight: FontWeight.bold,
+
+                color: Colors.black87,
+
+              ),
+
+            ),
+
+            SizedBox(
+
+              height: 3.0,
+
+            ),
+
+            Text(
+
+              '${models['date']}',
+
+              style: TextStyle(
+
+                fontSize: 15.0,
+
+                fontWeight: FontWeight.bold,
+
+                color: Colors.black45,
+
+              ),
+
+            ),
+
+          ],
+
+        ),
+
+      ),
+
+      SizedBox(
+
+        width: 15.0,
+
+      ),
+
+      IconButton(
+
+          onPressed: ()
+
+          {
+
+            AppCubit.get(context).UpdateDataBase(status: 'Done', id: models['id']);
+
+          },
+
+          icon: Icon(
+
+            Icons.check_circle,
+
+            color: Colors.green[200],
+
+          ),
+
+      ),
+
+      IconButton(
+
         onPressed: ()
+
         {
-          AppCubit.get(context).UpdateDataBase(status: 'Done', id: models['id']);
+
+          AppCubit.get(context).UpdateDataBase(status: 'Archived', id: models['id']);
+
         },
+
         icon: Icon(
-          Icons.check_circle,
-          color: Colors.green[200],
+
+          Icons.archive_rounded,
+
+          color: Colors.redAccent[200],
+
         ),
-    ),
-    IconButton(
-      onPressed: ()
-      {
-        AppCubit.get(context).UpdateDataBase(status: 'Archived', id: models['id']);
-      },
-      icon: Icon(
-        Icons.archive_rounded,
-        color: Colors.redAccent[200],
+
       ),
-    ),
-  ],
+
+    ],
+
+  ),
+  onDismissed: (direction)
+  {
+    AppCubit.get(context).DeleteDataBase(id: models['id']);
+  },
 );
 
