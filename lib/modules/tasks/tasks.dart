@@ -13,7 +13,7 @@ class TodoTasks extends StatelessWidget {
       builder: (context, state) => Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView.separated(
-            itemBuilder: (context, index) => DefaultTaskScreen(AppCubit.get(context).tasks[index]),
+            itemBuilder: (context, index) => DefaultTaskScreen(AppCubit.get(context).NewTasks[index], context),
             separatorBuilder: (context, index) => Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
@@ -22,7 +22,7 @@ class TodoTasks extends StatelessWidget {
                 color: Colors.grey[300],
               ),
             ),
-            itemCount: AppCubit.get(context).tasks.length),
+            itemCount: AppCubit.get(context).NewTasks.length),
       ),
       listener: (context, state)
       {

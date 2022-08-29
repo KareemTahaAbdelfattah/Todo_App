@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled/shared/bloc/cubit.dart';
 
 Widget defaultButton({
   double width = double.infinity,
@@ -23,7 +24,7 @@ Widget defaultButton({
   ),
 );
 
-Widget DefaultTaskScreen(Map models) => Row(
+Widget DefaultTaskScreen(Map models, context) => Row(
   children: [
     CircleAvatar(
       radius: 30.0,
@@ -52,7 +53,7 @@ Widget DefaultTaskScreen(Map models) => Row(
             style: TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.bold,
-              color: Colors.black54,
+              color: Colors.black87,
             ),
           ),
           SizedBox(
@@ -68,7 +69,30 @@ Widget DefaultTaskScreen(Map models) => Row(
           ),
         ],
       ),
-    )
+    ),
+    SizedBox(
+      width: 15.0,
+    ),
+    IconButton(
+        onPressed: ()
+        {
+          AppCubit.get(context).UpdateDataBase(status: 'Done', id: models['id']);
+        },
+        icon: Icon(
+          Icons.check_circle,
+          color: Colors.green[200],
+        ),
+    ),
+    IconButton(
+      onPressed: ()
+      {
+        AppCubit.get(context).UpdateDataBase(status: 'Archived', id: models['id']);
+      },
+      icon: Icon(
+        Icons.archive_rounded,
+        color: Colors.redAccent[200],
+      ),
+    ),
   ],
 );
 

@@ -10,6 +10,8 @@ class AppGetDataBase extends AppStates{}
 
 class AppInsertDataBase extends AppStates{}
 
+class AppUpdateDataBase extends AppStates{}
+
 class FabIconChange extends AppStates{}
 
 class ChangeNumOfList extends AppStates{}

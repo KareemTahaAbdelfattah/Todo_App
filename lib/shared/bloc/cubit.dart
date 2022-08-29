@@ -33,7 +33,9 @@ class AppCubit extends Cubit<AppStates> {
     emit(AppBottomNavBarStates());
   }
 
-  List<Map> tasks = [];
+  List<Map> NewTasks = [];
+  List<Map> DoneTasks = [];
+  List<Map> ArchivedTasks = [];
 
   Database? database;
 
@@ -52,11 +54,7 @@ class AppCubit extends Cubit<AppStates> {
         },);
       },
       onOpen: (database) {
-        GetDataFromDataBase(database).then((value) {
-          tasks = value;
-          print(value);
-          emit(AppGetDataBase());
-        },);
+        GetDataFromDataBase(database);
         print("database opened");
       },
     ).then((value) {
@@ -78,19 +76,48 @@ class AppCubit extends Cubit<AppStates> {
             .then((value) {
           print("$value successfully inserted");
           emit(AppInsertDataBase());
-          GetDataFromDataBase(database).then((value) {
-            tasks = value;
-            print(value);
-            emit(AppGetDataBase());
-          },);
+          GetDataFromDataBase(database);
         },).catchError((error) {
           print("error at inserted ${error.toString()}");
         },),);
   }
 
-  Future<List<Map>> GetDataFromDataBase(database) async
+  void GetDataFromDataBase(database)
   {
-    return await database?.rawQuery('SELECT * FROM tasks');
+    NewTasks = [];
+    DoneTasks = [];
+    ArchivedTasks = [];
+    database?.rawQuery('SELECT * FROM tasks').then((value) {
+
+      value.forEach((element)
+      {
+        if(element['status'] == 'new')
+        {
+          NewTasks.add(element);
+        }
+        else if(element['status'] == 'Done')
+        {
+          DoneTasks.add(element);
+        }
+        else ArchivedTasks.add(element);
+      },);
+        emit(AppGetDataBase());
+    },);
+  }
+
+  void UpdateDataBase(
+      {
+       @required String? status,
+        @required int? id,
+      }) async
+  {
+    database?.rawUpdate(
+        'UPDATE tasks SET status = ? WHERE id = ?',
+        ['$status', id]).then((value)
+    {
+      GetDataFromDataBase(database);
+      emit(AppUpdateDataBase());
+    });
   }
 
   IconData fabIcon = Icons.add;
